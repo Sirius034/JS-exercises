@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset = 'utf-8'>
+        <title> Задачи JS </title>
+    </head>
+    <body>
+        <h1><p> Привет! </p></h1>
+        
+        <p>Описание задачи можно найти перейдя по ссылке</p>
+        <script>
+            "use strict"
+            
+            // Задача Non-unique Elements https://js.checkio.org/ru/mission/non-unique-elements/
+            
+            function nonUniqueElements(data) {
+                flag:
+                for(let i = 0; i < data.length; i++){
+                    for(let k = 0; k < data.length; k++){
+                        if(k == i) {
+                            continue;
+                        }
+                        if(data[i] == data[k]){
+                            continue flag;
+                        }  
+                    }
+                    
+                    data.splice(i, 1);
+                    i = -1;
+                };
+//---------------------------------- второе решение 
+//                return data.filter(num => {
+//                    return data.indexOf(num) !== data.lastIndexOf(num);
+//                });
+            }
+    
+            console.log(nonUniqueElements([1, 2, 3, 4]));
+            
+                
+                // задача Median https://js.checkio.org/ru/mission/median/ 
+                
+                function median(data) {
+            
+                    data.sort((a, b) => {
+                        return a - b;
+                    });
+                    
+                    let index = Math.floor(data.length / 2);
+                    
+                    return data.length % 2 == 0 ? (data[index] + data[index - 1]) / 2 : data[index];
+                        
+                }
+                
+                console.log(median([1, 3, 2, 5, 4]));
+                console.log(median([1, 300, 2, 200, 1]));
+                console.log(median([3, 6, 20, 99, 10, 15]));
+            
+                
+           // Задача Окрестность Мура https://js.checkio.org/ru/mission/count-neighbours/
+                    
+            function countNeighbours(data, row, col) {
+                let sum = 0;
+                for(let i = row - 1; i <= row + 1; i++){
+            
+                    if (!data[i]) {
+                        continue;
+                    }
+                    
+                    for(let e = col - 1; e <= col + 1; e++ ) {
+
+                        if(data[i][e] && (i !== row || e !== col)) {
+                            sum++;
+                        }
+                    }
+                }
+                return sum;
+            
+            };
+            
+            console.log(countNeighbours([[1, 0, 0, 1, 0],
+                                         [0, 1, 0, 0, 0],
+                                         [0, 0, 1, 0, 1],
+                                         [1, 0, 0, 0, 0],
+                                         [0, 0, 1, 0, 0]], 1, 2)); //3
+            
+            console.log(countNeighbours([[1, 0, 0, 1, 0],
+                                         [0, 1, 0, 0, 0],
+                                         [0, 0, 1, 0, 1],
+                                         [1, 0, 0, 0, 0],
+                                         [0, 0, 1, 0, 0]], 0, 0)); //1
+            
+            console.log(countNeighbours([[1, 1, 1],
+                                         [1, 1, 1],
+                                         [1, 1, 1]], 0, 2)) //3
+            
+            console.log(countNeighbours([[0, 0, 0],
+                                         [0, 1, 0],
+                                         [0, 0, 0]], 1, 1)); //0
+            
+            
+            
+            // Задача Weak Point https://js.checkio.org/ru/mission/weak-point/
+            
+            function weakPoint(matrix) {
+                let minSumX = Infinity; 
+                let minSumY = Infinity; 
+                let x, y;
+                for(let i = 0; i < matrix.length; i++) {
+
+                    let sumX = matrix[i].reduce((sum, x) => sum + x);
+                    if(sumX < minSumX) {
+                        minSumX = sumX;
+                        x = i;
+                    }
+
+                    let sumY = 0;
+                    for(let y = 0; y < matrix[i].length; y++) {
+                        sumY += matrix[y][i];
+                    }
+                    if (sumY < minSumY) {
+                        minSumY = sumY;
+                        y = i;
+                    }  
+                }
+
+                return [x, y];
+
+            }
+
+            console.log(weakPoint([[7, 2, 7, 2, 8],
+                                    [2, 9, 4, 1, 7],
+                                    [3, 8, 6, 2, 4],
+                                    [2, 5, 2, 9, 1],
+                                    [6, 6, 5, 4, 5]]
+                                    ), [3, 3], "Example");
+            console.log(weakPoint([[7, 2, 4, 2, 8],
+                                    [2, 8, 1, 1, 7],
+                                    [3, 8, 6, 2, 4],
+                                    [2, 5, 2, 9, 1],
+                                    [6, 6, 5, 4, 5]]
+                                    ), [1, 2], "Two weak point");
+
+            console.log(weakPoint([[1, 1, 1],
+                                    [1, 1, 1],
+                                    [1, 1, 1]]
+                                    ), [0, 0], "Top left");
+            
+            
+            // Задача Correct Sentence https://js.checkio.org/ru/mission/correct-sentence/
+            
+            function correctSentence(text) {                
+                
+                
+                return text[0].toUpperCase() + text.slice(1) + (text[text.length - 1] != '.' ? '.' : '');
+                text = text.split('');
+                text[0] = text[0].toUpperCase();
+                if(text[text.length - 1] != '.') {
+                    text.push('.');
+                }
+ 
+                return text.join('');
+            }
+            
+            console.log(correctSentence("greetings, friends"));
+            console.log(correctSentence("Greetings, friends"));
+            console.log(correctSentence("Greetings, friends."));
+            console.log(correctSentence("hi"));
+            console.log(correctSentence("welcome to New York"));
+            
+            
+           // Задача Most Wanted Letter https://js.checkio.org/ru/mission/most-wanted-letter/
+            
+            function mostWanted(text) {
+                let letList = {};
+                for(let i of text.toLowerCase()) {
+                    if(/[a-z]/.test(i)){
+                        if(!letList[i]) {
+                            letList[i] = 0;
+                        }
+                        letList[i] += 1;
+                    }
+                }
+                
+                let sumSym = 0;
+                let symb;
+                for(let key in letList) {
+                    if (letList[key] > sumSym) {
+                        symb = key;
+                        sumSym = letList[key];
+                    } else if(letList[key] == sumSym) {
+                        symb = (symb.charCodeAt() < symb.charCodeAt()) ? key : symb;
+                    }
+                }
+            
+                return symb;
+            }
+            
+            console.log(mostWanted("Hello world"));
+            console.log(mostWanted(" a word "));
+            console.log(mostWanted("don't touch it"));
+            console.log(mostWanted("greetings, friends"));
+            console.log(mostWanted("... and so on ..."));
+            console.log(mostWanted("hi"));
+            console.log(mostWanted("Oops!"));
+            console.log(mostWanted("AAaooo!!!!"));
+            
+              
+            // Задача Roman Numerals https://js.checkio.org/ru/mission/roman-numerals/
+             
+            function romanNumbers(number) {
+                let  romNumb = '';
+                
+                let objNum = {
+                    M: 1000,
+                    CM: 900,
+                    D: 500,
+                    CD: 400,
+                    C: 100,
+                    XC: 90,
+                    L: 50,
+                    XL: 40,
+                    X: 10,
+                    IX: 9,
+                    V: 5,
+                    IV: 4,
+                    I: 1,
+                    
+                };
+                
+                for(let key in objNum) {
+                    
+                    while(number >= objNum[key]) {
+                        romNumb += key;
+                        number -= objNum[key];
+                    }
+                       
+                }
+               return romNumb;
+            }
+            
+            console.log(romanNumbers(3));
+            console.log(romanNumbers(7));
+            console.log(romanNumbers(17));
+            console.log(romanNumbers(44));
+            console.log(romanNumbers(76));
+            console.log(romanNumbers(3888));
+            
+            
+            // Задача Arab Numerals
+            
+            function arabNumbers(number) {          
+                let objNum = {
+                    M: 1000,
+                    CM: 900,
+                    D: 500,
+                    CD: 400,
+                    C: 100,
+                    XC: 90,
+                    L: 50,
+                    XL: 40,
+                    X: 10,
+                    IX: 9,
+                    V: 5,
+                    IV: 4,
+                    I: 1,
+                    
+                };  
+                
+                let arabNumb = 0;
+                
+                for(let key in objNum) {
+                    
+                    if(key === number) {
+                        arabNumb = objNum[key];
+                        break;
+                    }
+                    
+                    for(let i = 0; i < number.length; i++) {
+                        
+                        if(key == number[i]) {
+                            arabNumb += objNum[key];
+                        }  
+                    }  
+                }
+                
+                return arabNumb;      
+            }
+            
+            console.log(arabNumbers('III'));
+            console.log(arabNumbers('XI'));
+            console.log(arabNumbers('XIII'));
+            console.log(arabNumbers('LX'));
+            console.log(arabNumbers('LXI'));
+            console.log(arabNumbers('XL'));
+            console.log(arabNumbers('IV'));
+            console.log(arabNumbers('VI'));
+            
+            
+            //LONG REPEAT
+           
+            function longRepeat(string) {
+                let arr = string.split('');
+                let subStr;
+                let subStrLengt = 0;
+                let count = 0;
+                for(let i = 0, count = 0; i < arr.length; i++) {
+                   
+                    if(subStr != arr[i]) {
+                        subStr = arr[i] 
+                        
+                        if (count >= subStrLengt) {
+                            subStrLengt = count;
+                        }
+                    
+                        count = 0;
+                    }
+                    
+                    count++;
+                }
+                
+                return subStrLengt < count ? count : subStrLengt;
+           }
+            
+            console.log(longRepeat('sdsffffse'));
+            console.log(longRepeat('ddvvrwwwrggg'));
+            console.log(longRepeat('aa'));
+            
+            
+            
+            // Задача First Word https://js.checkio.org/ru/mission/first-word/
+            
+            function firstWord(text) {
+                let strArr = text.split(/[\.\s\,]/g);
+                
+                for(let i = 0; i < strArr.length; i++){
+                    if ((strArr[i])) {
+                        return strArr[i];
+                    }
+                }
+            }
+            
+            
+            console.log(firstWord('Hello world'));
+            console.log(firstWord(' a word '));
+            console.log(firstWord("dont't touch it"));
+            console.log(firstWord("greetings, friends"));
+            console.log(firstWord("... and so on ..."));
+            console.log(firstWord("hi"));
+            console.log(firstWord("h.i"));
+            
+            
+            // Задача Second Index https://js.checkio.org/ru/mission/second-index/
+            
+            function secondIndex(text, symbol) {
+                let oneInd = text.indexOf(symbol);
+                return text.indexOf(symbol, oneInd + 1) >= 0 ? text.indexOf(symbol, oneInd + 1) : undefined ;
+           
+            }
+            
+            console.log(secondIndex("sims", "s"));
+            console.log(secondIndex("find the river", "e"));
+            console.log(secondIndex("hi", " "));
+            console.log(secondIndex("hi mayor", " "));
+            console.log(secondIndex("hi mr Mayor", " "));            
+            
+            
+            // Задача Between Markers https://js.checkio.org/ru/mission/between-markers/
+            
+            function betwenMarkers(text, begin, end) {        
+                    
+                text.replace(begin, function(sym, index, str) {
+                    
+                    str = str.slice(index + begin.length); 
+                    
+                    if(text.indexOf(end) >= 0 && str.indexOf(end) < 0) {
+                        str = '';
+                    }
+                    
+                    text = str;
+                });
+                
+                text.replace(end, function(sym, index) {
+                    text = text.slice(0, index);
+                });
+                
+                return text;
+//             ----------- второе решение                 
+//                return text.slice(
+//                            text.indexOf(begin) >= 0 ? text.indexOf(begin) + begin.length : 0,
+//                            text.indexOf(end) >= 0 ? text.indexOf(end) : text.length 
+//                        );  
+            } 
+            
+            console.log(betwenMarkers('What is >apple<', '>', '<'));
+            console.log(betwenMarkers("<head><title>My new site</title></head>","<title>", "</title>"));                       
+            console.log(betwenMarkers('No[/b] hi', '[b]', '[/b]'));
+            console.log(betwenMarkers('No [b]hi', '[b]', '[/b]'));
+            console.log(betwenMarkers('No hi', '[b]', '[/b]'));
+            console.log(betwenMarkers('No <hi>', '>', '<'));
+            console.log(betwenMarkers("No <hi> one",">","<"));
+            
+            
+            // Задача Fizz Buzz https://js.checkio.org/ru/mission/fizz-buzz/   
+            
+            function fizzBuzz(data) {
+            
+                return data % 3 == 0 && data % 5 == 0 ? 'Fizz Buzz' : 
+                            data % 3 == 0 ? 'Fizz' : 
+                            data % 5 == 0 ? 'Buzz' : data + '';
+            }
+            
+            console.log(fizzBuzz(15));
+            console.log(fizzBuzz(3));
+            console.log(fizzBuzz(5));
+            console.log(fizzBuzz(12));
+            console.log(fizzBuzz(8));
+            
+            
+            // Задача Even the Las https://js.checkio.org/ru/mission/even-last/
+            
+            function evenLast(data) {
+                let summ = 0;
+                data.forEach(function(item, i) {
+                    summ += i % 2 == 0 ? item : 0;
+                 });
+                return summ == 0 ? 0 : summ * data.pop();    
+            }
+            
+            console.log(evenLast([0, 1, 2, 3, 4, 5]));
+            console.log(evenLast([1, 3, 5]));
+            console.log(evenLast([6]));
+            console.log(evenLast([]));
+            
+            
+            // Задача Secret Message https://js.checkio.org/ru/mission/secret-message/
+            
+            function findMAssage(data) {
+                let text = '';
+                
+                for(let i = 0; i < data.length; i++) {
+                    
+                    if (/[A-Z]/.test(data[i])) { 
+                         text += data[i];
+                    }
+                }
+                
+                return text;
+            }
+            
+            console.log(findMAssage("How are you? Eh, ok. Low or Lower? Ohhh."), "HELLO", "hello");
+            console.log(findMAssage("hello world!"), "", "Nothing");
+            console.log(findMAssage("HELLO WORLD!!!"), "HELLOWORLD", "Capitals");
+
+            
+            //Задача Three Words https://js.checkio.org/ru/mission/three-words/
+            
+            function threeWords(data) {
+                let count = 0;
+                
+                data = data.split(/[\.\s\,]/g);
+                
+                for(let i = 0; i < data.length; i++) {
+                    if(isNaN(data[i])) {
+                        count++;
+                        if(count == 3) {
+                            return true;
+                        }
+                    } else {
+                        count = 0;
+                    }
+                }
+                
+                return false;
+            }
+            
+            console.log(threeWords("Hello World hello"));
+            console.log(threeWords("He is 123 man"));
+            console.log(threeWords("1 2 3 4"));
+            console.log(threeWords("bla bla bla bla"));
+            console.log(threeWords("Hi"));
+            console.log(threeWords("one two 3 four five six 7 eight 9 ten eleven 12"));
+            
+            
+            // Задача Index Power https://js.checkio.org/ru/mission/index-power/
+            
+            function indexPower(array, n) {
+                return Math.pow(array[n], n) || -1;
+            }
+            
+            console.log(indexPower([1, 2, 3, 4], 2));
+            console.log(indexPower([1, 3, 10, 100], 3));
+            console.log(indexPower([0, 1], 0));
+            console.log(indexPower([1, 2], 3));
+            
+            
+            // Задача Most Number https://js.checkio.org/ru/mission/most-numbers/
+            
+            function mostNumber(numbers) {
+                
+                if (!arguments.length) return 0;
+                    
+                let min = Infinity;
+                let max = -Infinity;
+                
+                for(let key of arguments){ 
+                    if(key < min) min = key;
+                    if(key > max) max = key;
+                }
+                   
+                return +(max - min).toFixed(3);
+            }
+            
+            console.log(mostNumber(1, 2, 3));
+            console.log(mostNumber(5, -5));
+            console.log(mostNumber(10.2, -2.2, 0, 1.1, 0.5));
+            console.log(mostNumber());
+            console.log(mostNumber(-0.036,-0.11,-0.55,-64));
+           
+            
+            // Задача Digits Multip https://js.checkio.org/ru/mission/digits-multiplication/
+           
+            function digitsMultip(data) {
+                let comp = 1;
+    
+                for(let x of data.toString()) {
+                    if(!+x){
+                        continue;
+                    }
+                    comp *= x;
+                }
+                
+                return comp;
+                //-------------- второй вариант 
+                
+//                return data.toString().split('')
+//                       .reduce(function(sum, current) {
+//                            return current == 0 ? sum : sum * current
+//                        }, 1);
+            }
+            
+            console.log(digitsMultip(123405));
+            console.log(digitsMultip(999));
+            console.log(digitsMultip(1000));
+            console.log(digitsMultip(1111));
+            
+            
+            
+            // Задача Common Words https://js.checkio.org/ru/mission/common-words/
+            
+            function commonWords(first, second) {
+
+                let commonStr = [];
+                
+                second.split(',').forEach(function(s) {
+                   for(let f of first.split(',')) {
+                       if(s == f) {
+                          commonStr.push(s); 
+                       } 
+                    } 
+                });
+                
+                return commonStr.sort().join();
+                //-- второй вариант 
+            
+//                return first.split(',')
+//                       .filter(function(fI) {
+//                                return second.split(',').includes(fI);
+//                        }).sort().join();
+//                
+            }
+            
+            console.log(commonWords("hello,world", "hello,earth"));
+            console.log(commonWords("one,two,three", "four,five,six"));
+            console.log(commonWords("one,two,three", "four,five,one,two,six,three"));
+            
+            
+            // Задача Most Frequent https://js.checkio.org/ru/mission/the-most-frequent/
+            
+            function mostFrequent(data) {
+                let obj = {};
+                let sim;
+                let count = 0;
+                
+                for(let i of data) {
+                    obj[i] ? obj[i]++ : obj[i] = 1;
+                    
+                    if (obj[i] > count) {
+                        count = obj[i];
+                        sim = i;
+                    }     
+                }
+                
+                return sim;
+            } 
+            
+            console.log(mostFrequent([
+                'a', 'b', 'c', 
+                'a', 'b',
+                'a'
+            ]));
+            console.log(mostFrequent([
+                'a', 'b', 'c', 
+                'a', 'b',
+                'a'
+            ]));
+            console.log(mostFrequent(['a', 'a', 'bi', 'bi', 'bi']));
+            
+            
+            // Задача Bigger Price https://js.checkio.org/ru/mission/bigger-price/
+            
+            function biggerPrice(limit, data) {
+                let res = [];
+                data.sort(function(x, y) {
+                   return y.price - x.price;
+                });
+                
+                for(let i = 0; i < limit; i++) {
+                    res.push(data[i]);
+                };
+
+                return res;                
+            }
+            
+            console.log(biggerPrice(1, [
+                {"name": "bread", "price": 100},
+                {"name": "wine", "price": 138},
+                {"name": "meat", "price": 15},
+                {"name": "water", "price": 1}
+            ]));
+            console.log(biggerPrice(2, [
+                {"name": "bread", "price": 100},
+                {"name": "wine", "price": 138},
+                {"name": "meat", "price": 15},
+                {"name": "water", "price": 1}
+            ]));
+             console.log(biggerPrice(1, [
+                {"name": "pen", "price": 5},
+                {"name": "whiteboard", "price": 170}
+            ]));
+            
+            
+         // Задача Count Inversion https://js.checkio.org/ru/mission/count-inversions/
+            
+            function countInversion(seq) {
+                let count = 0;
+                
+                for(let i = 0; i < seq.length; i++) {
+                    for(let y = 0; y < i; y++) {
+                        if(seq[i] < seq[y]) {
+                            let value = seq[i];
+                            seq[i] = seq[y];
+                            seq[y] = value;
+                            count++;
+                        }
+                    }
+                }
+                return count;
+                
+            }
+            
+            console.log(countInversion([1, 2, 5, 3, 4, 7, 6]));
+            console.log(countInversion([0, 1, 2, 3]));
+            console.log(countInversion([99, -99]));
+            console.log(countInversion([5, 3, 2, 1, 0]));
+            
+            
+            // Задача Number Base https://js.checkio.org/ru/mission/number-radix/
+            
+            function numberBase(str_number, radix) {
+                let res = 0;
+            
+                for(let i = 0, n = str_number.length - 1; i < str_number.length; i++, n--) {
+                    let x = parseInt(str_number[i], radix);
+                    
+                    if(isNaN(parseInt(x))) {
+                        return -1;
+                    }
+                    
+                    res += x * radix ** n;   
+                }
+                
+                return res;
+//             --второе решение
+//                
+//                for(let str of str_number) {
+//                    if (isNaN(parseInt(str, radix))) {
+//                        return -1;
+//                    }
+//                }
+//                
+//                return parseInt(str_number, radix);
+//                                
+//               ---- третие решение
+//            
+//                let n = parseInt(str_number, radix);
+//                n.toString(radix) == str_number.toLowerCase() ? n : -1;   
+            }
+            
+            console.log(numberBase("AF", 16));
+            console.log(numberBase("101", 2));
+            console.log(numberBase("101", 5));
+            console.log(numberBase("Z", 36));
+            console.log(numberBase("AB", 10));
+            console.log(numberBase("ASD", 15)); //!! -1
+            console.log(numberBase("1A", 9)); // !! -1
+            console.log(numberBase("1A", 1)); // !! -1
+            
+            
+            // Задача The Ship Teams https://js.checkio.org/ru/mission/the-ship-teams/
+            
+           function twoTeams(sailors) {
+                let firstShip = [];
+                let secondShip = [];
+                
+                for(let key in sailors){
+                    if (sailors[key] < 20  || sailors[key] > 40) {
+                        firstShip.push(key);
+                    } else {
+                       secondShip.push(key); 
+                    }
+                }
+                
+                return [firstShip.sort(), secondShip.sort()];
+                
+             // второе решение  
+//                return [
+//                    Object.keys(sailors).filter( name => sailors[name] < 20 || sailors[name] > 40 ).sort(),
+//                    Object.keys(sailors).filter( name => sailors[name] < 40 && sailors[name] > 20 ).sort()   
+//                ];
+            }
+     
+            console.log(twoTeams({
+                'Smith': 34,
+                'Wesson': 22,
+                'Coleman': 45,
+                'Abrahams': 19
+            }));
+            console.log(twoTeams({
+                'Fernandes': 18, 
+                'Johnson': 22, 
+                'Kale': 41, 
+                'McCortney': 54
+            }));
+            
+            
+            
+            // Задача Ground for the House https://js.checkio.org/ru/mission/ground-for-the-house/
+           
+            function house(plan) {
+                let height = 0;
+                let width = 0;
+                let max = 0;
+                let min = plan.length;
+
+                plan = plan.split('\n').filter((x) => x.length > 0);  
+
+                plan.forEach((str, i, arr) => {
+                    max = max <= str.lastIndexOf('#') ? str.lastIndexOf('#') : max;
+
+                    if (str.indexOf('#') >= 0) {
+                        min = min >= str.indexOf('#') ? str.indexOf('#') : min;
+                        width = str.slice(min, max + 1).length;
+                    }
+
+                });
+
+                plan = plan.join();
+                height = plan.slice(plan.indexOf('#'), plan.lastIndexOf('#') + 1).split(',').length;
+
+                return height * width;
+            }
+        
+            console.log(house(`
+0000000
+##00##0
+######0
+##00##0
+#0000#0
+`)); //24
+            
+            console.log(house(`0000000000
+#000##000#
+##########
+##000000##
+0000000000
+`)); //30
+            
+            console.log(house(`0000
+0000
+#000
+`)); //1
+            
+            console.log(house(`0000
+0000
+`)); //0
+            
+            console.log(house(`0##0
+0000
+#00#
+`)); //12
+            
+            console.log(house(`
+00#0
+0#00
+#000`)); //9         
+            
+            console.log(house(`0000##0000
+#000##000#
+##########
+##000000##
+0########0
+`)); //50 
+          
+            
+            // Задача Cipher Map https://js.checkio.org/ru/mission/cipher-map/
+            
+            function recallPassword(grille, password) {
+                let result = '';
+
+                for(let turn = 0; turn < 4; turn++) {
+                    let arr = [];
+
+                    grille.forEach(function(elArr, index) {
+                        [].forEach.call(elArr, function(sym, i) {
+                            if( sym == 'X') {
+                                result += password[index][i];
+                            }  
+                        });
+                    });
+
+                    for(let sym = 0; sym < grille.length; sym++) {
+
+                       arr.push(grille.map(function(elArr) {
+                            return elArr[sym];
+                        }).reverse().join(''));
+
+                    }
+
+                    grille = arr;
+                }
+
+                return result; 
+            }
+
+            console.log(recallPassword(['X...',
+            '..X.',
+            'X..X',
+            '....'],
+            ['itdf',
+            'gdce',
+            'aton',
+            'qrdi']), 'icantforgetiddqd');
+
+            console.log(recallPassword(['....',
+            'X..X',
+            '.X..',
+            '...X'],
+            ['xhwc',
+            'rsqx',
+            'xqzz',
+            'fyzr']), 'rxqrwsfzxqxzhczy');
+            
+        </script>
+    </body>
+</html>
